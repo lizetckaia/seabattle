@@ -118,6 +118,7 @@ int main()
                 cout << endl;
             }
             getch();
+            break;
         }
 
     return 0;
