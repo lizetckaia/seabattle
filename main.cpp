@@ -9,6 +9,8 @@
 
 using namespace std;
 
+const int N = 10;
+
 void set_ships_rand(int map[N][N],int ship_size, int ships_num)
 {
     int x, y;
@@ -100,11 +102,10 @@ void set_ships_rand(int map[N][N],int ship_size, int ships_num)
 
 int main()
 {
-    const int N = 10;
-
         while(true)
         {
             int map [N][N] = {0};
+            set_ships_rand(map, 4, 1);
 
             //прорисовка корабля
             for (int i = 1; i < N; i++)
