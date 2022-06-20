@@ -130,7 +130,7 @@ void map_show(int map[N][N], int mask[N][N])
         {
             if (mask[j][i] == 1) {
                 if (map[j][i] == 0) {
-                    cout << "--";
+                    cout << "-";
                 } else {
                     cout << map[j][i];
                 }
@@ -173,21 +173,38 @@ int main()
                 if (map[x][y] == 1)
                 {
                     cout << "True" << endl;
+                    map[x][y] = 0;
                     mask[x][y] = 1;
+                    bool ship_detect = false;
+                    for (int i = 0; i < N; i++)
+                    {
+                        for (int j = 0; j < N; j++)
+                        {
+                            if (map[i][j] == 1)
+                            {
+                                ship_detect = true;
+                                break;
+                            }
+                        }
+                        if (ship_detect)
+                        {
+                            break;
+                        }
+                    }
+                    if (!ship_detect)
+                    {
+                        cout << "You won!" << endl;
+                        break;
+                    }
                 }
                 else
                 {
                     cout << "False" << endl;
                 }
                 mask[x][y] = 1;
-                break;
-
             }
-
-            getch();
+            break;
 
         }
-
-
     return 0;
 }
