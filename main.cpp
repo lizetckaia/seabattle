@@ -13,6 +13,7 @@ const int N = 10;
 
 //функция, ставящая на поле корабли
 //три параметра: поле, размер корабля, количество кораблей
+
 void set_ships_rand(int map[N][N],int ship_size, int ships_num)
 {
     int x, y;
@@ -21,8 +22,16 @@ void set_ships_rand(int map[N][N],int ship_size, int ships_num)
 
     int count_ship = 0;
 
+    int count_tact = 0;
+
     while(count_ship < ships_num)
     {
+        count_tact++;
+        if (count_tact > 1000)
+        {
+            break;
+        }
+
         //первичная позиция кораблей
         x = rand() % N;
         y = rand() % N;
@@ -101,6 +110,26 @@ void set_ships_rand(int map[N][N],int ship_size, int ships_num)
     }
 }
 
+//функция, выводящая игровое поле на экран
+void map_show()
+{
+    for (int i = 1; i < N; i++)
+    {
+        for (int j = 0; j < N; j++)
+        {
+            if (map[j][i] == 0)
+            {
+                cout << "-";
+            }
+            else
+            {
+                cout << map[j][i];
+            }
+        }
+        cout << endl;
+    }
+}
+
 //основная функция
 int main()
 {
@@ -117,22 +146,6 @@ int main()
 
             set_ships_rand(map, 1, 4);
 
-            //прорисовка корабля
-            for (int i = 1; i < N; i++)
-            {
-                for (int j = 0; j < N; j++)
-                {
-                    if (map[j][i] == 0)
-                    {
-                        cout << "-";
-                    }
-                    else
-                    {
-                        cout << map[j][i];
-                    }
-                }
-                cout << endl;
-            }
             break;
         }
 
