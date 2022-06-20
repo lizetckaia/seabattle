@@ -111,19 +111,33 @@ void set_ships_rand(int map[N][N],int ship_size, int ships_num)
 }
 
 //функция, выводящая игровое поле на экран
-void map_show()
+//параметры: исходный массив и маска
+void map_show(int map[N][N], int mask[N][N])
 {
-    for (int i = 1; i < N; i++)
+    cout << " ";
+
+    for (int i = 0; i < N; i++)
     {
+        cout << i;
+    }
+    cout << endl;
+
+    for (int i = 0; i < N; i++)
+    {
+        cout << i;
+
         for (int j = 0; j < N; j++)
         {
-            if (map[j][i] == 0)
-            {
-                cout << "-";
+            if (mask[j][i] == 1) {
+                if (map[j][i] == 0) {
+                    cout << "--";
+                } else {
+                    cout << map[j][i];
+                }
             }
             else
             {
-                cout << map[j][i];
+                cout << ' ';
             }
         }
         cout << endl;
@@ -136,18 +150,44 @@ int main()
         while(true)
         {
             int map [N][N] = {0};
-
+            int mask [N][N] = {0};
             //добавляем корабли
             set_ships_rand(map, 4, 1);
 
             set_ships_rand(map, 3, 2);
 
-            set_ships_rand(map, 3, 2);
+            set_ships_rand(map, 2, 3);
 
             set_ships_rand(map, 1, 4);
 
-            break;
+            map_show(map, mask);
+
+            int x = 0, y = 0;
+            while (true)
+            {
+                map_show(map,mask);
+                cout << endl << "Enter coordinates" << endl;
+                cin >> x;
+                cin >> y;
+
+                if (map[x][y] == 1)
+                {
+                    cout << "True" << endl;
+                    mask[x][y] = 1;
+                }
+                else
+                {
+                    cout << "False" << endl;
+                }
+                mask[x][y] = 1;
+                break;
+
+            }
+
+            getch();
+
         }
+
 
     return 0;
 }
