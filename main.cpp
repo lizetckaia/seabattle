@@ -1,9 +1,7 @@
 //#include 'stdafx.h'
 #include <iostream>
-#include <windows.h>
 #include <cmath>
 #include <ctime>
-#include <conio.h>
 #include <string>
 #include <fstream>
 
@@ -173,7 +171,6 @@ int main()
                 if (map[x][y] == 1)
                 {
                     cout << "True" << endl;
-                    map[x][y] = 0;
                     mask[x][y] = 1;
                     bool ship_detect = false;
                     for (int i = 0; i < N; i++)
