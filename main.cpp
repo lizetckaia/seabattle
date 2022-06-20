@@ -105,7 +105,15 @@ int main()
         while(true)
         {
             int map [N][N] = {0};
+
+            //добавляем корабли
             set_ships_rand(map, 4, 1);
+
+            set_ships_rand(map, 3, 2);
+
+            set_ships_rand(map, 3, 2);
+
+            set_ships_rand(map, 1, 4);
 
             //прорисовка корабля
             for (int i = 1; i < N; i++)
