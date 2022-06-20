@@ -11,6 +11,8 @@ using namespace std;
 
 const int N = 10;
 
+//функция, ставящая на поле корабли
+//три параметра: поле, размер корабля, количество кораблей
 void set_ships_rand(int map[N][N],int ship_size, int ships_num)
 {
     int x, y;
@@ -99,7 +101,7 @@ void set_ships_rand(int map[N][N],int ship_size, int ships_num)
     }
 }
 
-
+//основная функция
 int main()
 {
         while(true)
