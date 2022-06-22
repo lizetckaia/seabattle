@@ -9,6 +9,9 @@ using namespace std;
 
 const int N = 10;
 
+int ships_id = 1;
+int ships[10] = {0};
+
 //функция, ставящая на поле корабли
 //три параметра: поле, размер корабля, количество кораблей
 
@@ -49,15 +52,15 @@ void set_ships_rand(int map[N][N],int ship_size, int ships_num)
                 break;
             }
 
-            if (map[x  ][y]   == 1 ||
-                map[x  ][y+1] == 1 ||
-                map[x  ][y-1] == 1 ||
-                map[x+1][y]   == 1 ||
-                map[x+1][y+1] == 1 ||
-                map[x+1][y-1] == 1 ||
-                map[x-1][y]   == 1 ||
-                map[x-1][y+1] == 1 ||
-                map[x-1][y-1] == 1)
+            if (map[x  ][y]   >= 1 ||
+                map[x  ][y+1] >= 1 ||
+                map[x  ][y-1] >= 1 ||
+                map[x+1][y]   >= 1 ||
+                map[x+1][y+1] >= 1 ||
+                map[x+1][y-1] >= 1 ||
+                map[x-1][y]   >= 1 ||
+                map[x-1][y+1] >= 1 ||
+                map[x-1][y-1] >= 1)
             {
                 setting_is_possible = 0;
                 break;
@@ -87,22 +90,27 @@ void set_ships_rand(int map[N][N],int ship_size, int ships_num)
             y = temp_y;
             for (int i = 0; i < ship_size; i++)
             {
+                map[x][y] = ships_id;
+
                 switch(dir)
                 {
                     case 0:
-                        map[x][y] = 1;
                         x++;
-                        break;
+                    break;
                     case 1:
-                        map[x][y] = 1;
                         y++;
-                        break;
+                    break;
                     case 2:
-                        map[x][y] = 1;
+                        x--;
+                    break;
+                    case 3:
                         y--;
-                        break;
+                    break;
                 }
             }
+            ships[ships_id] = ship_size;
+
+            ships_id++;
             count_ship++;
         }
     }
@@ -126,12 +134,20 @@ void map_show(int map[N][N], int mask[N][N])
 
         for (int j = 0; j < N; j++)
         {
-            if (mask[j][i] == 1) {
-                if (map[j][i] == 0) {
+            if (mask[j][i] == 1)
+            {
+                if (map[j][i] == 0)
+                {
                     cout << "-";
-                } else {
-                    cout << map[j][i];
                 }
+                    else if (map[j][i] == -1)
+                    {
+                        cout << "X";
+                    }
+                    else
+                    {
+                    cout << map[j][i];
+                    }
             }
             else
             {
@@ -145,63 +161,74 @@ void map_show(int map[N][N], int mask[N][N])
 //основная функция
 int main()
 {
-        while(true)
+    while(true)
+    {
+        int map [N][N] = {0};
+        int mask [N][N] = {0};
+        //добавляем корабли
+        set_ships_rand(map, 4, 1);
+
+        set_ships_rand(map, 3, 2);
+
+        set_ships_rand(map, 2, 3);
+
+        set_ships_rand(map, 1, 3);
+
+        map_show(map, mask);
+
+        int x = 0, y = 0;
+        while (true)
         {
-            int map [N][N] = {0};
-            int mask [N][N] = {0};
-            //добавляем корабли
-            set_ships_rand(map, 4, 1);
+            map_show(map,mask);
+            cout << endl << "Enter coordinates" << endl;
 
-            set_ships_rand(map, 3, 2);
+            cin >> x;
+            cin >> y;
 
-            set_ships_rand(map, 2, 3);
-
-            set_ships_rand(map, 1, 4);
-
-            map_show(map, mask);
-
-            int x = 0, y = 0;
-            while (true)
+            if (map[x][y] >= 1)
             {
-                map_show(map,mask);
-                cout << endl << "Enter coordinates" << endl;
-                cin >> x;
-                cin >> y;
+                ships[map[x][y]]--;
 
-                if (map[x][y] == 1)
-                {
-                    cout << "True" << endl;
-                    mask[x][y] = 1;
-                    bool ship_detect = false;
-                    for (int i = 0; i < N; i++)
-                    {
-                        for (int j = 0; j < N; j++)
-                        {
-                            if (map[i][j] == 1)
-                            {
-                                ship_detect = true;
-                                break;
-                            }
-                        }
-                        if (ship_detect)
-                        {
-                            break;
-                        }
-                    }
-                    if (!ship_detect)
-                    {
-                        cout << "You won!" << endl;
-                        break;
-                    }
+                if (ships[map[x][y]] <= 0) {
+                    cout << "Killed" << endl;
                 }
                 else
                 {
-                    cout << "False" << endl;
+                    cout << "True" << endl;
                 }
-                mask[x][y] = 1;
-            }
-            break;
+                map[x][y] = -1;
 
+                mask[x][y] = 1;
+                bool ship_detect = false;
+                for (int i = 0; i < N; i++)
+                {
+                    for (int j = 0; j < N; j++)
+                    {
+                        if (map[i][j] == 1)
+                        {
+                            ship_detect = true;
+                            break;
+                        }
+                    }
+                    if (ship_detect)
+                    {
+                        break;
+                    }
+                }
+                if (!ship_detect)
+                {
+                    cout << "You won!" << endl;
+                    break;
+                }
+            }
+            else
+            {
+                cout << "False" << endl;
+            }
+            mask[x][y] = 1;
         }
+        break;
+
+    }
     return 0;
 }
