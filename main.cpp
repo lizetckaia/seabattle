@@ -18,7 +18,7 @@ int ships[10] = {0};
 //функция, которая переставляет курсор в заданные координаты
 void gotoxy(int x, int y)
 {
-    COORD p = {x, y};
+    COORD p = {static_cast<SHORT>(x), static_cast<SHORT>(y)};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), p);
 }
 //функция, показывающая корабль в зависимости от параметров
@@ -66,27 +66,27 @@ bool ship_in_map(int x, int y, int dir, int ship_size)
         {
             case 0:
                 x++;
-            break;
+                break;
             case 1:
                 y++;
-            break;
+                break;
             case 2:
                 x--;
-            break;
+                break;
             case 3:
                 y--;
-            break;
+                break;
         }
     }
     return in_map;
 }
 //установился ли корабль
-bool set_ship(int map[N][N], int x, int y, int dir,, int ship_size)
+bool set_ship(int map[N][N], int x, int y, int dir, int ship_size)
 {
     int temp_x = x;
     int temp_y = y;
 
-    bool settings_is_possible = 1;
+    bool setting_is_possible = 1;
     //проверка возможности постановки корабля
     for (int i = 0; i < ship_size; i++)
     {
@@ -96,19 +96,19 @@ bool set_ship(int map[N][N], int x, int y, int dir,, int ship_size)
             break;
         }
 
-        //if (map[x  ][y]   >= 1 ||
-            //map[x  ][y+1] >= 1 ||
-            //map[x  ][y-1] >= 1 ||
-            //map[x+1][y]   >= 1 ||
-            //map[x+1][y+1] >= 1 ||
-            //map[x+1][y-1] >= 1 ||
-            //map[x-1][y]   >= 1 ||
-            //map[x-1][y+1] >= 1 ||
-            //map[x-1][y-1] >= 1)
-        //{
-            //setting_is_possible = 0;
-            //break;
-        //}
+//if (map[x  ][y]   >= 1 ||
+//map[x  ][y+1] >= 1 ||
+//map[x  ][y-1] >= 1 ||
+//map[x+1][y]   >= 1 ||
+//map[x+1][y+1] >= 1 ||
+//map[x+1][y-1] >= 1 ||
+//map[x-1][y]   >= 1 ||
+//map[x-1][y+1] >= 1 ||
+//map[x-1][y-1] >= 1)
+//{
+//setting_is_possible = 0;
+//break;
+//}
 
         if (map[x][y]   >= 1)
         {
@@ -169,24 +169,25 @@ bool set_ship(int map[N][N], int x, int y, int dir,, int ship_size)
         {
             case 0:
                 x++;
-                break;
+            break;
             case 1:
                 y++;
-                break;
+            break;
             case 2:
                 x--;
-                break;
+            break;
             case 3:
                 y--;
-                break;
+            break;
         }
     }
 
-    //ставим корабль, если есть такая возможность
+//ставим корабль, если есть такая возможность
     if (setting_is_possible == 1)
     {
         x = temp_x;
         y = temp_y;
+
         for (int i = 0; i < ship_size; i++)
         {
             map[x][y] = ships_id;
@@ -195,16 +196,16 @@ bool set_ship(int map[N][N], int x, int y, int dir,, int ship_size)
             {
                 case 0:
                     x++;
-                    break;
+                break;
                 case 1:
                     y++;
-                    break;
+                break;
                 case 2:
                     x--;
-                    break;
+                break;
                 case 3:
                     y--;
-                    break;
+                break;
             }
         }
         ships[ships_id] = ship_size;
@@ -212,11 +213,12 @@ bool set_ship(int map[N][N], int x, int y, int dir,, int ship_size)
         ships_id++;
     }
 
-    return settings_is_possible;
+    return setting_is_possible;
 }
 
 //функция, ставящая на поле корабли
 //три параметра: поле, размер корабля, количество кораблей
+
 void set_ships_rand(int map[N][N],int ship_size, int ships_num)
 {
     int x, y;
@@ -355,7 +357,7 @@ void map_show(int map[N][N], int mask[N][N])
             }
             //else
             //{
-                //cout << ' ';
+            //cout << ' ';
             //}
         }
         cout << endl;
@@ -376,8 +378,8 @@ int main()
         //set_ships_rand(map, 2, 3);
         //set_ships_rand(map, 1, 3);
 
-        int x = 0, y = 0; //координаты первой палубы корабля
-        int dir = 0; //определяет положение корабля
+        int x = 2, y = 2; //координаты первой палубы корабля
+        int dir = 1; //определяет положение корабля
         int ship_size = 4; //размер корабля
         int ch;
 
@@ -411,14 +413,14 @@ int main()
                     dir = !dir;
                 break;
                 case 13://установка корабля
-                    if (set_ship(map,x,y,dir,ship_size))
+                    if (set_ship(map, x, y, dir, ship_size))
                     {
                         x = 0;
                         y = 0;
                         dir = 0;
                         ship_size--;
                     }
-                break;
+                    break;
             }
 
             if (!ship_in_map(x, y, dir, ship_size))
