@@ -208,11 +208,11 @@ int main()
         int mask2 [N][N] = {0};
 
         //добавляем корабли
-        for (int i =1; i < NUM_SHIPS; i++)
+        for (int i = 1; i <= NUM_SHIPS; i++)
         {
             set_ships_rand(map, ships1[i], i);
         }
-        for (int i =1; i < NUM_SHIPS; i++)
+        for (int i = 1; i <= NUM_SHIPS; i++)
         {
             set_ships_rand(map2, ships2[i], i);
         }
@@ -267,7 +267,7 @@ int main()
                     else if (result_shot == 2)
                     {
                         bool died = 1;
-                        for (int i =1; i < NUM_SHIPS; i++)
+                        for (int i = 1; i <= NUM_SHIPS; i++)
                         {
                             if (ships2[i] != 0)
                             {
@@ -323,7 +323,7 @@ int main()
                         else if (result_shot == 2)
                         {
                             bool died = 1;
-                            for (int i =1; i < NUM_SHIPS; i++)
+                            for (int i = 1; i <= NUM_SHIPS; i++)
                             {
                                 if (ships1[i] != 0)
                                 {
@@ -385,7 +385,7 @@ int main()
                                 change_dir = 1;
                             }
                         }
-                        if (change_dir = 1)
+                        if (change_dir == 1)
                         {
                             if (!dirs.empty())
                             {
@@ -415,7 +415,7 @@ int main()
                             dirs.push_back(0);
 
                             bool died = 1;
-                            for (int i =1; i < NUM_SHIPS; i++)
+                            for (int i = 1; i <= NUM_SHIPS; i++)
                             {
                                 if (ships1[i] != 0)
                                 {
@@ -467,5 +467,4 @@ int main()
         getch();
         system("cls");
     }
-
 }
