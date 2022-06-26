@@ -30,6 +30,7 @@ void set_ships_rand(int map[N][N],int ship_size, int ship_id)
     while(count_ship < 1)
     {
         count_tact++;
+
         if (count_tact > 1000)
         {
             break;
@@ -42,7 +43,8 @@ void set_ships_rand(int map[N][N],int ship_size, int ship_id)
         int temp_x = x;
         int temp_y = y;
 
-        bool setting_is_possible = 1;
+        bool setting_is_possible = true;
+
         //генерация направления кораблей
         dir = rand() % 4;
 
@@ -91,6 +93,7 @@ void set_ships_rand(int map[N][N],int ship_size, int ship_id)
         {
             x = temp_x;
             y = temp_y;
+
             for (int i = 0; i < ship_size; i++)
             {
                 map[x][y] = ship_id;
@@ -146,19 +149,23 @@ void map_show(int map[N][N], int mask[N][N], bool use_mask)
                 {
                     cout << "-";
                 }
+
                 else if (map[j][i] == -1)
                 {
                     cout << "X";
                 }
+
                 else if (map[j][i] == -2)
                 {
                     cout << ".";
                 }
+
                 else
                 {
                     cout << map[j][i];
                 }
             }
+
             else
             {
                 cout << ' ';
@@ -169,7 +176,7 @@ void map_show(int map[N][N], int mask[N][N], bool use_mask)
 }
 
 /**
- * функция, которая возвращает целое значение в зависимости от того ранен корабль, убит или был совершен промах
+ * функция, которая возвращает целое значение в зависимости от того, ранен корабль, убит, или был совершен промах
  * @param map поле
  * @param x координата х
  * @param y координата у
@@ -187,6 +194,7 @@ int shot(int map[N][N], int x, int y, int ships[NUM_SHIPS+1], int mask[N][N])
     {
         result = 3;
     }
+
     else if (map[x][y] >= 1)
     {
         ships[map[x][y]]--;
@@ -195,6 +203,7 @@ int shot(int map[N][N], int x, int y, int ships[NUM_SHIPS+1], int mask[N][N])
         {
             result = 2;
         }
+
         else
         {
             result = 1;
@@ -202,6 +211,7 @@ int shot(int map[N][N], int x, int y, int ships[NUM_SHIPS+1], int mask[N][N])
 
         map[x][y] = -1;
     }
+
     else
     {
         map[x][y] = -2;
@@ -240,6 +250,7 @@ int main()
         {
             set_ships_rand(map, ships1[i], i);
         }
+
         for (int i = 1; i <= NUM_SHIPS; i++)
         {
             set_ships_rand(map2, ships2[i], i);
@@ -261,6 +272,7 @@ int main()
         ///переменная, содержащая координату y, по которой стреляет бот
         int y_bot = 0;
 
+        ///направление
         int dir = 0;
 
         ///вектор направления
@@ -312,6 +324,7 @@ int main()
                                 break;
                             }
                         }
+
                         if (died == 1)
                         {
                             win_gamer = true;
@@ -320,11 +333,13 @@ int main()
 
                         cout << "Killed" << endl;
                     }
+
                     else
                     {
                         cout << "False" << endl;
                     }
                 }
+
                 else //предоставление хода компьютеру
                 {
                     cout << endl << "Computer's turn";
@@ -384,6 +399,7 @@ int main()
                         }
 
                     }
+
                     else if (mode == 1)
                     {
                         bool change_dir = false;
@@ -397,6 +413,7 @@ int main()
                                 change_dir = true;
                             }
                         }
+
                         else if (dir == 1) //движение вправо
                         {
                             if (x_bot < N-1)
@@ -406,6 +423,7 @@ int main()
                                 change_dir = true;
                             }
                         }
+
                         else if (dir == 2) //движение вверх
                         {
                             if (y_bot > 0)
@@ -416,6 +434,7 @@ int main()
                                         true;
                             }
                         }
+
                         else if (dir == 3) //движение вниз
                         {
                             if (y_bot < N-1)
@@ -425,6 +444,7 @@ int main()
                                 change_dir = 1;
                             }
                         }
+
                         if (change_dir == 1)
                         {
                             if (!dirs.empty())
@@ -443,6 +463,7 @@ int main()
                         {
                             cout << "True" << endl;
                         }
+
                         else if (result_shot == 2)
                         {
                             mode = 0;
@@ -455,6 +476,7 @@ int main()
                             dirs.push_back(0);
 
                             bool died = true;
+
                             for (int i = 1; i <= NUM_SHIPS; i++)
                             {
                                 if (ships1[i] != 0)
@@ -471,6 +493,7 @@ int main()
 
                             cout << "Killed" << endl;
                         }
+
                         else
                         {
                             if (!dirs.empty())
@@ -507,4 +530,5 @@ int main()
         getch();
         system("cls");
     }
+
 }
