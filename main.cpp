@@ -36,7 +36,9 @@ void set_ships_rand(int map[N][N],int ship_size, int ship_id)
             break;
         }
 
-        //первичная позиция кораблей
+        /**
+         * первичная позиция кораблей
+         */
         x = rand() % N;
         y = rand() % N;
 
@@ -45,10 +47,16 @@ void set_ships_rand(int map[N][N],int ship_size, int ship_id)
 
         bool setting_is_possible = true;
 
-        //генерация направления кораблей
+        /**
+         * генерация направления кораблей
+         */
+
         dir = rand() % 4;
 
-        //проверка возможности постановки корабля
+        /**
+         * проверка возможности постановки корабля
+         */
+
         for (int i = 0; i < ship_size; i++)
         {
             if (x < 0 || y < 0 || x >= N || y >= N)
@@ -88,7 +96,10 @@ void set_ships_rand(int map[N][N],int ship_size, int ship_id)
             }
         }
 
-        //ставим корабль, если есть такая возможность
+        /**
+         * ставим корабль, если есть такая возможность
+         */
+
         if (setting_is_possible == 1)
         {
             x = temp_x;
@@ -128,7 +139,9 @@ void set_ships_rand(int map[N][N],int ship_size, int ship_id)
 
 void map_show(int map[N][N], int mask[N][N], bool use_mask)
 {
-    //прорисовка
+    /**
+     * прорисовка
+     */
     cout << " ";
 
     for (int i = 0; i < N; i++)
@@ -245,7 +258,9 @@ int main()
         int mask [N][N] = {0};
         int mask2 [N][N] = {0};
 
-        //добавляем корабли
+        /**
+         * /добавляем корабли
+         */
         for (int i = 1; i <= NUM_SHIPS; i++)
         {
             set_ships_rand(map, ships1[i], i);
@@ -289,19 +304,28 @@ int main()
         ///переменная, отвечающая за очередность ходов(1 - ходит человек, 0 - компьютер)
         bool turn = true;
 
-        //цикл, отвечающий за стрельбу
+        /**
+         * цикл, отвечающий за стрельбу
+         */
         while (!win_gamer && !win_bot)
         {
             int result_shot = 0;
 
-            //цикл, отвечающий за переключение хода
+            /**
+             * цикл, отвечающий за переключение хода
+             */
+
             do
             {
                 map_show(map, mask, 0);
                 cout << endl;
                 map_show(map2, mask2, 1);
 
-                if (turn == 1) //предоставление хода человеку
+                /**
+                 * предоставление хода человеку
+                 */
+
+                if (turn == 1)
                 {
                     cout << endl << "Enter coordinates";
                     cin >> x;
@@ -340,10 +364,19 @@ int main()
                     }
                 }
 
-                else //предоставление хода компьютеру
+                /**
+                 * предоставление хода компьютеру
+                 */
+
+                else
                 {
                     cout << endl << "Computer's turn";
-                    Sleep(1000); //компьютер 'думает'
+
+                    /**
+                     * компьютер 'думает'
+                     */
+
+                    Sleep(1000);
 
                     if (mode == 0)
                     {
@@ -353,16 +386,21 @@ int main()
                             y_bot = rand() % N;
 
                             result_shot = shot(map, x_bot, y_bot, ships1, mask);
-                        } while(result_shot == 3);
-
+                        }
+                        while(result_shot == 3);
 
                         if (result_shot == 1)
                         {
                             mode = 1;
 
-                            //запоминание координаты x палубы корабля, по которой было осуществлено попадание
+                            /**
+                             * запоминание координаты x палубы корабля, по которой было осуществлено попадание
+                             */
                             first_hit_x = x_bot;
-                            //запоминание координаты y палубы корабля, по которой было осуществлено попадание
+
+                            /**
+                             * запоминание координаты y палубы корабля, по которой было осуществлено попадание
+                             */
                             first_hit_y = y_bot;
 
                             if (!dirs.empty())
@@ -404,7 +442,11 @@ int main()
                     {
                         bool change_dir = false;
 
-                        if (dir == 0) // движение влево
+                        /**
+                         * движение влево
+                         */
+
+                        if (dir == 0)
                         {
                             if (x_bot > 0)
                                 x_bot--;
@@ -414,7 +456,11 @@ int main()
                             }
                         }
 
-                        else if (dir == 1) //движение вправо
+                        /**
+                         * движение вправо
+                         */
+
+                        else if (dir == 1)
                         {
                             if (x_bot < N-1)
                                 x_bot++;
@@ -424,7 +470,11 @@ int main()
                             }
                         }
 
-                        else if (dir == 2) //движение вверх
+                        /**
+                         * движение вверх
+                         */
+
+                        else if (dir == 2)
                         {
                             if (y_bot > 0)
                                 y_bot--;
@@ -435,7 +485,11 @@ int main()
                             }
                         }
 
-                        else if (dir == 3) //движение вниз
+                        /**
+                         * движение вниз
+                         */
+
+                        else if (dir == 3)
                         {
                             if (y_bot < N-1)
                                 y_bot++;
@@ -514,14 +568,21 @@ int main()
                 Sleep(1000);
                 system("cls");
 
-            } while (result_shot != 0);
-            turn = !turn;//передача хода
+            }
+            while (result_shot != 0);
+
+            /**
+             * передача хода
+             */
+
+            turn = !turn;
         }
 
         if (win_gamer)
         {
             cout << "You won!" << endl;
         }
+
         else if (win_bot)
         {
             cout << "Game over" << endl;
