@@ -10,8 +10,13 @@ using namespace std;
 const int N = 10;
 const int NUM_SHIPS = 9;
 
-//функция, ставящая на поле корабли
-//три параметра: поле, размер корабля, идентификатор корабля
+/**
+ * функция, ставящая на поле корабли
+ * @param map поле
+ * @param ship_size размер корабля
+ * @param ship_id идентификатор корабля
+ */
+
 void set_ships_rand(int map[N][N],int ship_size, int ship_id)
 {
     int x, y;
@@ -46,7 +51,7 @@ void set_ships_rand(int map[N][N],int ship_size, int ship_id)
         {
             if (x < 0 || y < 0 || x >= N || y >= N)
             {
-                setting_is_possible = 0;
+                setting_is_possible = false;
                 break;
             }
 
@@ -60,7 +65,7 @@ void set_ships_rand(int map[N][N],int ship_size, int ship_id)
                 map[x-1][y+1] >= 1 ||
                 map[x-1][y-1] >= 1)
             {
-                setting_is_possible = 0;
+                setting_is_possible = false;
                 break;
             }
 
@@ -111,8 +116,13 @@ void set_ships_rand(int map[N][N],int ship_size, int ship_id)
     }
 }
 
-//функция, выводящая игровое поле на экран
-//параметры: исходный массив и маска
+/**
+ * функция, выводящая игровое поле на экран
+ * @param map поле
+ * @param mask маска
+ * @param use_mask накладывание маски
+ */
+
 void map_show(int map[N][N], int mask[N][N], bool use_mask)
 {
     //прорисовка
@@ -157,11 +167,21 @@ void map_show(int map[N][N], int mask[N][N], bool use_mask)
         cout << endl;
     }
 }
-//функция, которая возвращает целое значение в зависимости от того ранен корабль, убит или был совершен промах
-//параметры: ссылка на карту, координата x, координата y, ссылка на массив, в котором хранится информация о жизнях корабля, ссылка на маску
+
+/**
+ * функция, которая возвращает целое значение в зависимости от того ранен корабль, убит или был совершен промах
+ * @param map поле
+ * @param x координата х
+ * @param y координата у
+ * @param ships ссылка на массив, в котором хранится информация о жизнях корабля
+ * @param mask ссылка на маску
+ * @return
+ */
+
 int shot(int map[N][N], int x, int y, int ships[NUM_SHIPS+1], int mask[N][N])
 {
-    int result = 0; //переменная, которая отвечает за результат стрельбы
+    ///переменная, которая отвечает за результат стрельбы
+    int result = 0;
 
     if (map[x][y] == -1 || map[x][y] == -2)
     {
@@ -192,16 +212,24 @@ int shot(int map[N][N], int x, int y, int ships[NUM_SHIPS+1], int mask[N][N])
     return result;
 }
 
-//основная функция
+/**
+ * основная функция
+ * @return
+ */
+
 int main()
 {
     while(true)
     {
-        int map [N][N] = {0}; //карта, принадлежащая человеку
-        int map2 [N][N] = {0}; //карта, принадлежащая компьютеру
+        ///карта, принадлежащая человеку
+        int map [N][N] = {0};
+        ///карта, принадлежащая компьютеру
+        int map2 [N][N] = {0};
 
-        int ships1[NUM_SHIPS+1] = {0, 4,3,3,2,2,2,1,1,1}; //корабли, которые будут расставляться на поле человека (1 4-х палубный корабль, 2 3-х палубных корабля, 3 2-х палубных корабля, 3 1-х палубных корабля)
-        int ships2[NUM_SHIPS+1] = {0, 4,3,3,2,2,2,1,1,1}; //корабли, которые будут расставляться на поле компьютера (1 4-х палубный корабль, 2 3-х палубных корабля, 3 2-х палубных корабля, 3 1-х палубных корабля)
+        ///корабли, которые будут расставляться на поле игрока
+        int ships1[NUM_SHIPS+1] = {0, 4,3,3,2,2,2,1,1,1};
+        ///корабли, которые будут расставляться на поле компьютера
+        int ships2[NUM_SHIPS+1] = {0, 4,3,3,2,2,2,1,1,1};
 
 
         int mask [N][N] = {0};
@@ -217,34 +245,43 @@ int main()
             set_ships_rand(map2, ships2[i], i);
         }
 
-        int x = 0, y = 0; //переменные, содержащие координаты, по которым стреляет человек
+        ///переменные, содержащие координаты, по которым стреляет человек
+        int x = 0, y = 0;
 
-        int first_hit_x = 0; //переменная, хранящая координату x первого попадания по кораблю
-        int first_hit_y = 0; //переменная, хранящая координату y первого попадания по кораблю
+        ///переменная, хранящая координату x первого попадания по кораблю
+        int first_hit_x = 0;
+        ///переменная, хранящая координату y первого попадания по кораблю
+        int first_hit_y = 0;
 
-        int mode = 0; //переменная, определяющая режим работы бота
+        ///переменная, определяющая режим работы бота
+        int mode = 0;
 
-        int x_bot = 0; //переменная, содержащая координату x, по которой стреляет бот
-        int y_bot = 0; //переменная, содержащая координату y, по которой стреляет бот
+        ///переменная, содержащая координату x, по которой стреляет бот
+        int x_bot = 0;
+        ///переменная, содержащая координату y, по которой стреляет бот
+        int y_bot = 0;
 
         int dir = 0;
 
-        vector <int> dirs; //вектор направления
+        ///вектор направления
+        vector <int> dirs;
 
         dirs.push_back(3);
         dirs.push_back(2);
         dirs.push_back(1);
         dirs.push_back(0);
 
-        bool win_gamer = 0;
-        bool win_bot = 0;
+        bool win_gamer = false;
+        bool win_bot = false;
 
-        bool turn = 1; //переменная, отвечающая за очередность ходов(1 - ходит человек, 0 - компьютер)
+        ///переменная, отвечающая за очередность ходов(1 - ходит человек, 0 - компьютер)
+        bool turn = true;
 
         //цикл, отвечающий за стрельбу
-        while (win_gamer == false && win_bot == false)
+        while (!win_gamer && !win_bot)
         {
             int result_shot = 0;
+
             //цикл, отвечающий за переключение хода
             do
             {
@@ -266,18 +303,18 @@ int main()
 
                     else if (result_shot == 2)
                     {
-                        bool died = 1;
+                        bool died = true;
                         for (int i = 1; i <= NUM_SHIPS; i++)
                         {
                             if (ships2[i] != 0)
                             {
-                                died = 0;
+                                died = false;
                                 break;
                             }
                         }
                         if (died == 1)
                         {
-                            win_gamer =1;
+                            win_gamer = true;
                             break;
                         }
 
@@ -291,7 +328,7 @@ int main()
                 else //предоставление хода компьютеру
                 {
                     cout << endl << "Computer's turn";
-                    Sleep(1000); //компьютер думает
+                    Sleep(1000); //компьютер 'думает'
 
                     if (mode == 0)
                     {
@@ -308,8 +345,10 @@ int main()
                         {
                             mode = 1;
 
-                            first_hit_x = x_bot; //запоминание координаты x палубы корабля, по которой было осуществлено попадание
-                            first_hit_y = y_bot; //запоминание координаты y палубы корабля, по которой было осуществлено попадание
+                            //запоминание координаты x палубы корабля, по которой было осуществлено попадание
+                            first_hit_x = x_bot;
+                            //запоминание координаты y палубы корабля, по которой было осуществлено попадание
+                            first_hit_y = y_bot;
 
                             if (!dirs.empty())
                             {
@@ -322,18 +361,18 @@ int main()
 
                         else if (result_shot == 2)
                         {
-                            bool died = 1;
+                            bool died = true;
                             for (int i = 1; i <= NUM_SHIPS; i++)
                             {
                                 if (ships1[i] != 0)
                                 {
-                                    died = 0;
+                                    died = false;
                                     break;
                                 }
                             }
                             if (died == 1)
                             {
-                                win_bot =1;
+                                win_bot = true;
                                 break;
                             }
 
@@ -347,7 +386,7 @@ int main()
                     }
                     else if (mode == 1)
                     {
-                        bool change_dir = 0;
+                        bool change_dir = false;
 
                         if (dir == 0) // движение влево
                         {
@@ -355,7 +394,7 @@ int main()
                                 x_bot--;
                             else
                             {
-                                change_dir = 1;
+                                change_dir = true;
                             }
                         }
                         else if (dir == 1) //движение вправо
@@ -364,7 +403,7 @@ int main()
                                 x_bot++;
                             else
                             {
-                                change_dir = 1;
+                                change_dir = true;
                             }
                         }
                         else if (dir == 2) //движение вверх
@@ -373,7 +412,8 @@ int main()
                                 y_bot--;
                             else
                             {
-                                change_dir = 1;
+                                change_dir =
+                                        true;
                             }
                         }
                         else if (dir == 3) //движение вниз
@@ -414,18 +454,18 @@ int main()
                             dirs.push_back(1);
                             dirs.push_back(0);
 
-                            bool died = 1;
+                            bool died = true;
                             for (int i = 1; i <= NUM_SHIPS; i++)
                             {
                                 if (ships1[i] != 0)
                                 {
-                                    died = 0;
+                                    died = false;
                                     break;
                                 }
                             }
                             if (died == 1)
                             {
-                                win_bot =1;
+                                win_bot =true;
                                 break;
                             }
 
@@ -455,11 +495,11 @@ int main()
             turn = !turn;//передача хода
         }
 
-        if (win_gamer == true)
+        if (win_gamer)
         {
             cout << "You won!" << endl;
         }
-        else if (win_bot == true)
+        else if (win_bot)
         {
             cout << "Game over" << endl;
         }
