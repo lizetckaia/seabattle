@@ -11,6 +11,7 @@
 using namespace std;
 
 const int N = 10;
+const int NUM_SHIPS = 9;
 
 int ships_id = 1;
 int ships[10] = {0};
@@ -217,9 +218,9 @@ bool set_ship(int map[N][N], int x, int y, int dir, int ship_size)
 }
 
 //функция, ставящая на поле корабли
-//три параметра: поле, размер корабля, количество кораблей
+//три параметра: поле, размер корабля, идентификатор корабля
 
-void set_ships_rand(int map[N][N],int ship_size, int ships_num)
+void set_ships_rand(int map[N][N],int ship_size, int ship_id)
 {
     int x, y;
 
@@ -229,7 +230,7 @@ void set_ships_rand(int map[N][N],int ship_size, int ships_num)
 
     int count_tact = 0;
 
-    while(count_ship < ships_num)
+    while(count_ship < 1)
     {
         count_tact++;
         if (count_tact > 1000)
@@ -296,7 +297,7 @@ void set_ships_rand(int map[N][N],int ship_size, int ships_num)
             y = temp_y;
             for (int i = 0; i < ship_size; i++)
             {
-                map[x][y] = ships_id;
+                map[x][y] = ship_id;
 
                 switch(dir)
                 {
@@ -314,9 +315,9 @@ void set_ships_rand(int map[N][N],int ship_size, int ships_num)
                         break;
                 }
             }
-            ships[ships_id] = ship_size;
+            //ships[ships_id] = ship_size;
 
-            ships_id++;
+            //ships_id++;
             count_ship++;
         }
     }
@@ -369,21 +370,42 @@ int main()
 {
     while(true)
     {
-        int map [N][N] = {0};
-        int mask [N][N] = {0};
-        //добавляем корабли
+        int map [N][N] = {0}; //карта, принадлежащая человеку
+        int map2 [N][N] = {0}; //карта, принадлежащая компьютеру
 
-        //set_ships_rand(map, 4, 1);
-        //set_ships_rand(map, 3, 2);
-        //set_ships_rand(map, 2, 3);
-        //set_ships_rand(map, 1, 3);
+        int ships1[NUM_SHIPS+1] = {0, 4,3,3,2,2,2,1,1,1}; //корабли, которые будут расставляться на поле человека (1 4-х палубный корабль, 2 3-х палубных корабля, 3 2-х палубных корабля, 3 1-х палубных корабля)
+        int ships2[NUM_SHIPS+1] = {0, 4,3,3,2,2,2,1,1,1}; //корабли, которые будут расставляться на поле компьютера (1 4-х палубный корабль, 2 3-х палубных корабля, 3 2-х палубных корабля, 3 1-х палубных корабля)
+
+
+        int mask [N][N] = {0};
+
+        //добавляем корабли
+        for (int i =1; i < NUM_SHIPS; i++)
+        {
+            set_ships_rand(map, ships1[i], i);
+        }
+        for (int i =1; i < NUM_SHIPS; i++)
+        {
+            set_ships_rand(map2, ships2[i], i);
+        }
+        /*set_ships_rand(map, 4, 1); //установить 1 4-х палубный корабль
+        set_ships_rand(map, 3, 2); //установить 2 3-х палубных корабля
+        set_ships_rand(map, 2, 3); //установить 3 2-х палубных корабля
+        set_ships_rand(map, 1, 3); //установить 3 1-х палубных корабля
+
+        ships_id = 1;*/
+
+        /*set_ships_rand(map2, 4, 1); //установить 1 4-х палубный корабль
+        set_ships_rand(map2, 3, 2); //установить 2 3-х палубных корабля
+        set_ships_rand(map2, 2, 3); //установить 3 2-х палубных корабля
+        set_ships_rand(map2, 1, 3); //установить 3 1-х палубных корабля*/
 
         int x = 2, y = 2; //координаты первой палубы корабля
         int dir = 1; //определяет положение корабля
         int ship_size = 4; //размер корабля
         int ch;
 
-        while (true)
+        /*while (true)
         {
             map_show(map,mask);
             ship_show(x, y, dir, ship_size);
@@ -433,11 +455,13 @@ int main()
 
 
             system("cls");
-        }
+        }*/
 
         while (true)
         {
             map_show(map,mask);
+            map_show(map2,mask);
+
             cout << endl << "Enter coordinates" << endl;
 
             cin >> x;
