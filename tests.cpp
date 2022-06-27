@@ -1,5 +1,6 @@
 #include "main.cpp"
 #include <doctest.h>
+using namespace std;
 
 TEST_CASE("doctest works")
 {
@@ -19,5 +20,6 @@ TEST_CASE("testing shot")
     CHECK (result == 2);
     CHECK (result == 1);
     CHECK (result == -1);
+    CHECK (result == 0);
 }
 
