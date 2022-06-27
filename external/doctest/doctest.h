@@ -5998,15 +5998,4 @@ DOCTEST_GCC_SUPPRESS_WARNING_POP
 
 #endif // DOCTEST_LIBRARY_IMPLEMENTATION
 #endif // DOCTEST_CONFIG_IMPLEMENT
-© 2022 GitHub, Inc.
-Terms
-        Privacy
-Security
-        Status
-Docs
-        Contact GitHub
-        Pricing
-API
-        Training
-Blog
-        About
+

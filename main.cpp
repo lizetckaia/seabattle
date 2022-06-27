@@ -237,7 +237,7 @@ int shot(int map[N][N], int x, int y, int ships[NUM_SHIPS+1], int mask[N][N])
 
 /**
  * основная функция
- * @return
+ * @return начинает саму игру
  */
 
 int main()
@@ -495,7 +495,7 @@ int main()
                                 y_bot++;
                             else
                             {
-                                change_dir = 1;
+                                change_dir = true;
                             }
                         }
 

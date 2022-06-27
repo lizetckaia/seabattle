@@ -1,5 +1,5 @@
 #include "main.cpp"
-#include "doctest.h"
+#include <doctest.h>
 
 TEST_CASE("doctest works")
 {
