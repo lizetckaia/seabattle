@@ -4,7 +4,7 @@ project(untitled1)
 set(CMAKE_CXX_STANDARD 14)
 
 add_subdirectory(external/doctest)
-add_executable(untitled1 main.cpp external/doctest/doctest.cpp external/doctest/doctest.h)
+add_executable(untitled1 main.cpp external/doctest/doctest.cpp external/doctest/doctest.h functionfortest.cpp)
 
 enable_testing()
 

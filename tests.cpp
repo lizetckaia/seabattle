@@ -1,4 +1,4 @@
-#include "main.cpp"
+#include "functionfortest.cpp"
 #include <doctest.h>
 using namespace std;
 
@@ -12,7 +12,7 @@ TEST_CASE("testing map_show")
 
 }
 
-TEST_CASE("testing shot")
+TEST_CASE("shot")
 
 {
     int shot;
