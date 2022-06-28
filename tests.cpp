@@ -16,10 +16,26 @@ TEST_CASE("testing shot")
 
 {
     int shot;
-    CHECK (result == 3);
-    CHECK (result == 2);
-    CHECK (result == 1);
-    CHECK (result == -1);
-    CHECK (result == 0);
-}
 
+    if (map[x][y] == -1 || map[x][y] == -2)
+    {
+        CHECK (result == 3);
+    }
+
+    else if (map[x][y] >= 1)
+    {
+        ships[map[x][y]]--;
+
+        if (ships[map[x][y]] <= 0)
+        {
+            CHECK (result == 2);
+        }
+
+        else
+        {
+            CHECK (result == 1);
+        }
+        map[x][y] = -1;
+    }
+
+}
