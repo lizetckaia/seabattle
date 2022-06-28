@@ -8,7 +8,7 @@ add_executable(untitled1 main.cpp external/doctest/doctest.cpp external/doctest/
 
 enable_testing()
 
-add_executable(untitled1_tests tests.cpp)
+add_executable(untitled1_tests tests.cpp funtionfortest.cpp)
 target_link_libraries(untitled1_tests PUBLIC doctest)
 
 add_test(NAME test COMMAND test --force-colors -d)

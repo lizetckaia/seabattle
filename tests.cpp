@@ -21,27 +21,9 @@ TEST_CASE("shot")
 
     int mask [N][N] = {0};
 
-    int result = 0;
+    int result = shot(map, x, y, ships, mask);
+    CHECK(result == 0);
 
-    if (map[x][y] == -1 || map[x][y] == -2)
-    {
-        CHECK (result == 3);
-    }
 
-    else if (map[x][y] >= 1)
-    {
-        ships[map[x][y]]--;
-
-        if (ships[map[x][y]] <= 0)
-        {
-            CHECK (result == 2);
-        }
-
-        else
-        {
-            CHECK (result == 1);
-        }
-
-    }
 
 }
